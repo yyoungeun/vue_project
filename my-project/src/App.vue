@@ -2,7 +2,11 @@
   <div id="app">
     <TodoHeader></TodoHeader>
     <TodoInput v-on:addTodo="addTodo"></TodoInput>
-    <TodoList v-bind:propsdata="todoItems" @removeTodo="removeTodo"></TodoList>
+    <TodoList
+      v-bind:propsdata="todoItems"
+      @removeTodo="removeTodo"
+      @toggleOne="toggleFn"
+    ></TodoList>
     <TodoFooter v-on:removeAll="clearAll"></TodoFooter>
   </div>
 </template>
@@ -21,17 +25,21 @@ export default {
   //item add
   created() {
     if (localStorage.length > 0) {
-      for (var i = 0; i < localStorage.length; i++) {
-        if (localStorage.key(i) != "loglevel:webpack-dev-server")
-          this.todoItems.push(localStorage.key(i));
-        console.log(this.todoItems);
+      for (let i = 0; i < localStorage.length; i++) {
+        if (localStorage.key(i) !== "loglevel:webpack-dev-server") {
+          this.todoItems.push(
+            JSON.parse(localStorage.getItem(localStorage.key(i)))
+          );
+          console.log(localStorage.getItem(localStorage.key(i)));
+        }
       }
     }
   },
   methods: {
     addTodo(todoItem) {
-      localStorage.setItem(todoItem, todoItem);
-      this.todoItems.push(todoItem);
+      var obj = { completed: false, item: todoItem };
+      localStorage.setItem(todoItem, JSON.stringify(obj));
+      this.todoItems.push(obj);
     },
     // 전체 삭제
     clearAll() {
@@ -39,9 +47,14 @@ export default {
       this.todoItems = [];
     },
     removeTodo(todoItem, index) {
-      localStorage.removeItem(todoItem);
       this.todoItems.splice(index, 1);
+      localStorage.removeItem(todoItem.item);
       //해당 index에서 1만큼 삭제
+    },
+    toggleFn(todoItem, index) {
+      this.todoItems[index].completed = !this.todoItems[index].completed;
+      localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
+      //localStorage.removeItem(todoItem.item);
     }
   },
   components: {

@@ -3,11 +3,23 @@
     <transition-group name="list" tag="ul">
       <li
         v-for="(todoItem, index) in propsdata"
-        v-bind:key="todoItem"
+        v-bind:key="index"
         class="shadow"
       >
-        <i class="checkBtn fas fa-edit" aria-hidden="true"></i>
-        {{ todoItem }}
+        <div>
+          <i
+            class="checkBtn fas fa-edit"
+            aria-hidden="true"
+            @click="toggleFn(todoItem, index)"
+            v-bind:class="{ checkBtnCompleted: todoItem.completed }"
+          ></i>
+          <span
+            @click="toggleFn(todoItem, index)"
+            :class="{ textCompleted: todoItem.completed }"
+          >
+            {{ todoItem.item }}</span
+          >
+        </div>
         <span
           class="removeBtn"
           type="button"
@@ -26,6 +38,9 @@ export default {
   methods: {
     removeTodo(todoItem, index) {
       this.$emit("removeTodo", todoItem, index);
+    },
+    toggleFn(todoItem, index) {
+      this.$emit("toggleOne", todoItem, index);
     }
   }
 };
