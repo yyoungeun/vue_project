@@ -11,14 +11,14 @@
       <i class="addBtn fas fa-location-arrow" aria-hidden="true"></i>
     </span>
     <!-- modal -->
-    <modal v-if="showModal" v-on:close="showModal = false">
+    <Modal v-if="showModal" v-on:close="showModal = false">
       <h3 slot="header">경고</h3>
       <span slot="footer" v-on:click="showModal = false"
-        >할 일을 입력하세요!
+        >닫기
         <!-- slot :  -->
         <i class="closeModalBtn fas fa-times" aria-hidden="true"></i>
       </span>
-    </modal>
+    </Modal>
   </div>
 </template>
 

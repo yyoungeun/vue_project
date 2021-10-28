@@ -28,6 +28,7 @@ export default {
       for (let i = 0; i < localStorage.length; i++) {
         if (localStorage.key(i) !== "loglevel:webpack-dev-server") {
           this.todoItems.push(
+            // JSON.parse : JSON을 객체로 바꿔준다.
             JSON.parse(localStorage.getItem(localStorage.key(i)))
           );
           console.log(localStorage.getItem(localStorage.key(i)));
@@ -38,6 +39,7 @@ export default {
   methods: {
     addTodo(todoItem) {
       var obj = { completed: false, item: todoItem };
+      // JSON.stringify : 객체를 JSON으로 바꿔준다.
       localStorage.setItem(todoItem, JSON.stringify(obj));
       this.todoItems.push(obj);
     },

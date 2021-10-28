@@ -9,11 +9,11 @@
             </slot>
           </div>
 
-          <!-- <div class="modal-body">
+          <div class="modal-body">
             <slot name="body">
-              default body
+              할 일을 입력하세요!
             </slot>
-          </div> -->
+          </div>
 
           <div class="modal-footer">
             <slot name="footer">
